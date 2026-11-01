@@ -120,10 +120,8 @@ class SessionManager(private val plugin: LinkDialogues) : Listener {
         if (s.phase != DialogueSession.Phase.CHOOSING) return
         when (plugin.settings.hotbarMode) {
             HotbarMode.NONE -> return
-            HotbarMode.NUMBER -> {
-                e.isCancelled = true
-                s.onHotbar(e.newSlot, tick, plugin.settings.scrollCooldown)
-            }
+            // slot change is allowed: the held slot itself is the selection
+            HotbarMode.NUMBER -> e.isCancelled = s.onHotbar(e.newSlot)
             HotbarMode.SCROLL -> {
                 e.isCancelled = true
                 if (tick - s.lastScrollTick < plugin.settings.scrollCooldown) return

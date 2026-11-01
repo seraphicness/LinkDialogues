@@ -10,7 +10,7 @@
 | `interaction` | `[SwapHand]` | 진행/결정 입력. `SwapHand`(F) 는 항상 포함. `LeftClick`, `RightClick` 추가 가능 |
 | `exit` | `Sneak` | 대화 종료 입력. `Sneak` / `None` |
 | `select-keys` | `true` | 선택지에서 W/S 로 커서 이동, Space 로 결정 |
-| `hotbar` | `Number` | 핫바 입력: `Number`(숫자키 1~6 + 휠 동시 사용) / `Scroll`(휠만) / `None` |
+| `hotbar` | `Number` | 핫바 입력: `Number`(숫자키 + 휠 동시 사용) / `Scroll`(휠만) / `None` |
 | `scroll-cooldown` | `2` | 휠 입력 최소 간격 (tick) |
 | `click-cooldown` | `4` | F/클릭 최소 간격 (tick) |
 | `refresh-interval` | `10` | 변화가 없을 때 액션바를 다시 보내는 간격 (tick, 1~40) |
