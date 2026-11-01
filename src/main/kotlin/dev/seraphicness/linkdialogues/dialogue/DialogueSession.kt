@@ -275,17 +275,21 @@ class DialogueSession(
         return selectIndex(if (down) (selected + 1) % n else (selected - 1 + n) % n)
     }
 
-    /** Number-key selection: moves the cursor to answer [index]; F (or Space) confirms. */
+    /**
+     * Number-key selection: moves the cursor to answer [index] and scrolls it to the top of the answer window so the
+     * hidden answers below it come into view (e.g. 4 answers / 3 rows: pressing 2 shows 2,3,4). F (or Space) confirms.
+     */
     fun onNumber(index: Int) {
         if (closed || phase != Phase.CHOOSING || index !in answers.indices || index == selected) return
-        selectIndex(index)
+        selectIndex(index, toTop = true)
     }
 
-    private fun selectIndex(index: Int): Boolean {
+    private fun selectIndex(index: Int, toTop: Boolean = false): Boolean {
         val n = answers.size
         selected = index
         val rows = pack.answerLines.count
         if (n <= rows) windowStart = 0
+        else if (toTop) windowStart = minOf(selected, n - rows)
         else if (selected < windowStart) windowStart = selected
         else if (selected >= windowStart + rows) windowStart = selected - rows + 1
         style.scrollSound?.play(player)
