@@ -69,6 +69,9 @@ class DialogueSession(
     private var lockApplied = false
     private var appliedSpeed: Double? = null
     private var originalSlot = -1
+    /** Slot the client believes it holds (it only snaps back to [PARK_SLOT] once our reset packet arrives). */
+    private var clientSlot = PARK_SLOT
+    private var lastWheelTick = -100L
 
     // ───────────────────────── lifecycle ─────────────────────────
 
@@ -276,6 +279,33 @@ class DialogueSession(
     }
 
     /**
+     * Hotbar input in number mode: tells mouse-wheel steps from number keys.
+     * The held slot is parked on slot index 7, so the wheel gives 6 (up) or 8 (down) and keys 1~6 give 0~5.
+     * While the client has not yet received our slot reset after a fast wheel spin, a step next to its current slot is
+     * still treated as wheel.
+     */
+    fun onHotbar(newSlot: Int, tick: Long, wheelCooldown: Int) {
+        if (closed || phase != Phase.CHOOSING) return
+        val wheel: Boolean? = when {
+            newSlot == PARK_SLOT + 1 -> true
+            newSlot == PARK_SLOT - 1 -> false
+            tick - lastWheelTick <= WHEEL_CHAIN_TICKS && newSlot == (clientSlot + 1) % 9 -> true
+            tick - lastWheelTick <= WHEEL_CHAIN_TICKS && newSlot == (clientSlot + 8) % 9 -> false
+            else -> null
+        }
+        clientSlot = newSlot
+        if (wheel != null) {
+            lastWheelTick = tick
+            if (tick - lastScrollTick >= wheelCooldown) {
+                lastScrollTick = tick
+                onScroll(wheel)
+            }
+        } else if (newSlot < NUMBER_KEYS) {
+            onNumber(newSlot)
+        }
+    }
+
+    /**
      * Number-key selection: moves the cursor to answer [index] and scrolls it to the top of the answer window so the
      * hidden answers below it come into view (e.g. 4 answers / 3 rows: pressing 2 shows 2,3,4). F (or Space) confirms.
      */
@@ -332,6 +362,7 @@ class DialogueSession(
         if (choosing && plugin.settings.hotbarMode == HotbarMode.NUMBER && player.inventory.heldItemSlot != PARK_SLOT) {
             if (originalSlot < 0) originalSlot = player.inventory.heldItemSlot
             player.inventory.heldItemSlot = PARK_SLOT
+            clientSlot = PARK_SLOT
         }
     }
 
@@ -361,7 +392,15 @@ class DialogueSession(
 
     companion object {
         val MODIFIER_KEY = NamespacedKey("linkdialogues", "dialogue_lock")
-        const val PARK_SLOT = 8
+        /**
+         * While choosing in number mode the held slot is parked on slot 8 (key 8). Its neighbours, slots 7 and 9, are
+         * what the mouse wheel produces, so keys 1~6 can be told apart from the wheel.
+         */
+        const val PARK_SLOT = 7
+        const val NUMBER_KEYS = 6
+
+        /** How long (ticks) after a wheel step the client may still be on the un-reset slot. */
+        private const val WHEEL_CHAIN_TICKS = 6
 
         fun removeEffect(player: Player) {
             player.getAttribute(Attribute.MOVEMENT_SPEED)?.removeModifier(MODIFIER_KEY)

@@ -122,7 +122,7 @@ class SessionManager(private val plugin: LinkDialogues) : Listener {
             HotbarMode.NONE -> return
             HotbarMode.NUMBER -> {
                 e.isCancelled = true
-                if (e.newSlot != DialogueSession.PARK_SLOT) s.onNumber(e.newSlot)
+                s.onHotbar(e.newSlot, tick, plugin.settings.scrollCooldown)
             }
             HotbarMode.SCROLL -> {
                 e.isCancelled = true
