@@ -1,0 +1,18 @@
+name: LinkDialogues
+version: '${version}'
+main: dev.seraphicness.linkdialogues.LinkDialogues
+api-version: '1.21'
+softdepend: [BetonQuest, PlaceholderAPI]
+loadbefore: [CraftEngine]
+description: BetonQuest conversation IO that renders dialogues on the action bar with a custom resource pack
+authors: [seraphicness]
+commands:
+  linkdialogues:
+    description: LinkDialogues main command
+    usage: /<command> <reload|pack|preview>
+    aliases: [ldl]
+    permission: linkdialogues.admin
+permissions:
+  linkdialogues.admin:
+    description: Allows using /linkdialogues
+    default: op

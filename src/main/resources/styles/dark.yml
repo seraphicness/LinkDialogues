@@ -1,0 +1,72 @@
+# 어두운 테마 예시 (BetonQuest conversationIO: linkdialogues_dark)
+Settings:
+  typing-speed: 1
+  typing-sound-every: 2
+  effect: Freeze
+  answer-numbers: true
+  prevent-exit: false
+  prevent-skip: false
+  character-name: true
+  character-image: false
+  background-fog: true
+  npc-focus: true
+  max-line-width: 0
+
+Texts:
+  typing-info-line: 'F키로 넘기기'
+  steady-info-line: '숫자키로 선택, F키로 결정'
+  next-info-line: 'F키로 계속'
+  final-info-line: 'F키로 닫기'
+
+Sounds:
+  typing:
+    id: minecraft:block.note_block.bit
+    source: MASTER
+    volume: 0.25
+    pitch: 1.4
+  selection:
+    id: minecraft:block.amethyst_block.chime
+    source: MASTER
+    volume: 0.8
+    pitch: 1.0
+  scroll:
+    id: minecraft:block.note_block.hat
+    source: MASTER
+    volume: 0.5
+    pitch: 1.0
+
+Offsets:
+  name: 0
+  name-background: 20
+  dialogue-background: 0
+  dialogue-line: 10
+  answer-background: 140
+  answer-line: 13
+  arrow: -7
+  character: -16
+  information: 27
+
+Images:
+  character-background: character-background
+  arrow: hand
+  dialogue-background: dialogue-background
+  answer-background: answer-background
+  name-start: name-start
+  name-mid: name-mid
+  name-end: name-end
+  fog: fog
+
+Portraits: {}
+
+Colors:
+  name: '#f2e399'
+  name-background: '#2a2a35'
+  dialogue: '#e6e6e6'
+  dialogue-background: '#1e1e26'
+  answer: '#c8c8c8'
+  answer-background: '#1e1e26'
+  character-background: '#ffffff'
+  arrow: '#f2e399'
+  selected: '#f2e399'
+  fog: '#000000'
+  information: '#bfbfbf'

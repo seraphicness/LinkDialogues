@@ -1,0 +1,74 @@
+# 대화 스타일 (BetonQuest conversationIO: linkdialogues_default)
+Settings:
+  typing-speed: 1        # 글자당 tick
+  typing-sound-every: 1  # 몇 글자마다 타이핑 사운드
+  effect: Slowness       # Slowness / Freeze / None
+  answer-numbers: true
+  prevent-exit: false    # BetonQuest 대화의 stop: true 도 종료 금지로 처리됨
+  prevent-skip: false
+  character-name: true
+  character-image: true
+  background-fog: true
+  npc-focus: true        # 대화 시작 시 NPC 쪽을 바라보게 함
+  # 대사 줄 최대 폭(px). 0 = 대화창 폭 - 좌우 여백 자동 계산
+  max-line-width: 0
+
+Texts:
+  typing-info-line: 'F키로 넘기기'
+  steady-info-line: '숫자키로 선택, F키로 결정'
+  next-info-line: 'F키로 계속'
+  final-info-line: 'F키로 닫기'
+
+Sounds:
+  typing:
+    id: minecraft:block.note_block.hat
+    source: MASTER
+    volume: 0.35
+    pitch: 1.6
+  selection:
+    id: minecraft:ui.button.click
+    source: MASTER
+    volume: 0.6
+    pitch: 1.2
+  scroll:
+    id: minecraft:block.note_block.hat
+    source: MASTER
+    volume: 0.5
+    pitch: 1.0
+
+Offsets:
+  name: 0
+  name-background: 20
+  dialogue-background: 0
+  dialogue-line: 10
+  answer-background: 140
+  answer-line: 13
+  arrow: -7
+  character: -16
+  information: 27
+
+Images:
+  character-background: character-background
+  arrow: hand
+  dialogue-background: dialogue-background
+  answer-background: answer-background
+  name-start: name-start
+  name-mid: name-mid
+  name-end: name-end
+  fog: fog
+
+# NPC 이름(색 코드 제외)별 초상화 이미지 (pack/layout.yml Images 에 등록된 id)
+Portraits: {}
+
+Colors:
+  name: '#4f4a3e'
+  name-background: '#f8ffe0'
+  dialogue: '#4f4a3e'
+  dialogue-background: '#f8ffe0'
+  answer: '#4f4a3e'
+  answer-background: '#f8ffe0'
+  character-background: '#ffffff'
+  arrow: '#cdff29'
+  selected: '#2d87c3'
+  fog: '#000000'
+  information: '#f8ffe0'
